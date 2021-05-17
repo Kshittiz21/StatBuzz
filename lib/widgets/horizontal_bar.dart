@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:statbuzz/bloc/player_listing_bloc.dart';
+import 'package:statbuzz/bloc/player_listing_event.dart';
 import 'package:statbuzz/models/nation_model.dart';
 
 class HorizontalBar extends StatelessWidget {
@@ -17,7 +20,8 @@ class HorizontalBar extends StatelessWidget {
   Widget buildItem(context, index) {
     return InkWell(
       onTap: () {
-        // ....
+        BlocProvider.of<PlayerListingBloc>(context)
+            .add(CountrySelectedEvent(nationModel: nations[index]));
       },
       child: Container(
         width: 70.0,

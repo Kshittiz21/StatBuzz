@@ -1,33 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:statbuzz/bloc/player_listing_bloc.dart';
+import 'package:statbuzz/screens/player_listing.dart';
 import 'package:statbuzz/services/player_repository.dart';
 import 'package:statbuzz/themes/themes.dart';
 import 'package:statbuzz/widgets/horizontal_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final PlayerRepository playerRepository;
 
   HomePage({this.playerRepository});
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  PlayerListingBloc _playerListingBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _playerListingBloc =
+        PlayerListingBloc(playerRepository: widget.playerRepository);
+  }
+
+  @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: Center(
-          child: Text(
-            'Football Players',
-            style: appBarTextStyle,
-            //textAlign: TextAlign.center,
+    return BlocProvider(
+      create: (context) => _playerListingBloc,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: Center(
+            child: Text(
+              'Football Players',
+              style: appBarTextStyle,
+              //textAlign: TextAlign.center,
+            ),
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          HorizontalBar(),
-          SizedBox(height: 10.0),
-          //PlayerListing(),
-        ],
+        body: Column(
+          children: [
+            HorizontalBar(),
+            SizedBox(height: 10.0),
+            PlayerListing(),
+          ],
+        ),
       ),
     );
   }
