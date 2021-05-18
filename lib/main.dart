@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:statbuzz/services/player_repository.dart';
+import 'package:statbuzz/themes/themes.dart';
 
 import './screens/home_page.dart';
 
@@ -21,6 +22,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'StatBuzz',
+      theme: ThemeData(
+        canvasColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          elevation: 0,
+          textTheme: TextTheme(
+            title: appBarTextStyle,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+        ),
+      ),
       home: HomePage(playerRepository: playerRepository),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statbuzz/bloc/player_listing_bloc.dart';
+import 'package:statbuzz/screens/advanced_search_page.dart';
 import 'package:statbuzz/screens/player_listing.dart';
 import 'package:statbuzz/services/player_repository.dart';
 import 'package:statbuzz/themes/themes.dart';
 import 'package:statbuzz/widgets/horizontal_bar.dart';
+import 'package:statbuzz/widgets/search_bar.dart';
 
 class HomePage extends StatefulWidget {
   final PlayerRepository playerRepository;
@@ -36,6 +38,16 @@ class _HomePageState extends State<HomePage> {
     return BlocProvider(
       create: (context) => _playerListingBloc,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AdvancedSearchPage()),
+            );
+          },
+          label: Text('Advanced Search'),
+          icon: Icon(Icons.filter_list),
+        ),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
@@ -50,6 +62,8 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           children: [
             HorizontalBar(),
+            SizedBox(height: 10.0),
+            SearchBar(),
             SizedBox(height: 10.0),
             PlayerListing(),
           ],
